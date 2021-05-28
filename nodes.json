@@ -1,0 +1,29 @@
+{
+    "nodes":{
+	"cn113":{
+	    "Mom":"cn113.cm.cluster",
+	    "ntype":"PBS",
+	    "state":"free",
+	    "pcpus":40,
+	    "jobs":[
+		"715814.maple"
+	    ],
+	    "resources_available":{
+		"arch":"linux",
+		"host":"cn113",
+		"mem":"192240000kb",
+		"ncpus":40,
+		"Qlist":"r410",
+		"vnode":"cn113"
+	    },
+	    "resources_assigned":{
+		"mem":"16777216kb",
+		"ncpus":4
+	    },
+	    "resv_enable":"True",
+	    "sharing":"default_shared",
+	    "last_state_change_time":1621610387,
+	    "last_used_time":1622209957
+	}
+    }
+}
