@@ -40,9 +40,13 @@ type Resource struct {
 	Vnode  string `json:"vnode"`
 }
 
-// percentages seem nice for graphing, but I think a flat number
-// option might be nice
+// TODO percentages seem nice for graphing, but I think a flat number
+// option might be convenient for humans
+
+// TODO run the pbsnodes command here:
+// pbsnodes -aF json
 func main() {
+	// this can be replaced with function to call pbsnodes
 	f, err := os.Open("pbs.json")
 	if err != nil {
 		panic(err)
@@ -56,11 +60,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%5s%9s\n", "Node", "Mem")
-	fmt.Println("--------------")
+	// below is probably a function, pass it node list
+	fmt.Printf("%5s%8s%8s\n", "Node", "%Mem", "%CPU")
+	fmt.Println("---------------------")
 	names := make([]string, 0)
 	for _, node := range pbs.Nodes {
-		names = append(names, strings.TrimRight(node.Mom, "cm.cluster"))
+		names = append(names,
+			strings.TrimRight(node.Mom, "cm.cluster"))
 	}
 	sort.Strings(names)
 	for _, n := range names {
@@ -73,7 +79,10 @@ func main() {
 			strings.TrimRight(node.Assign.Mem, "kb"),
 			64,
 		)
-		fmt.Printf("%5s%8.2f%%\n", n,
-			100*assign/(avail+assign))
+		fmt.Printf("%5s%8.2f", n, 100*assign/avail)
+		fmt.Printf("%8.2f", 100*float64(node.Assign.Cpus)/
+			float64(node.Avail.Cpus))
+		fmt.Printf("%8s", node.Avail.Queues)
+		fmt.Print("\n")
 	}
 }
